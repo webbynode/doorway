@@ -22,13 +22,24 @@ Or install it yourself as:
 	
 	# -or-
 	
-	Doorway.connect(:root, "10.0.1.20", :ssh_key => "~/.keys/somekey.pem") do |conn|
+	Doorway.connect(:deployer, "10.0.1.20", :ssh_key => "~/.keys/deployer.pem") do |conn|
 	
-		# Ubuntu specific package management
+		# Raw command execution
 
-		conn.add_ppa "chris-lea/node.js"
-		conn.install "nodejs"
+		conn.exec    "whoami"
+		conn.exec_as :root, "REALLY_GEM_UPDATE_SYSTEM=y gem update --system"
 	
+		# Script execution
+
+		conn.exec_script <<-EOS.strip_heredoc
+		
+			#!/bin/bash
+			apt-get install -y some-package
+		
+		EOS
+		
+		conn.exec_script_as :git, "scripts/add-public-ip"
+		
 		# Remote files
 
 		conn.remote_file "/etc/nginx/nginx.conf", "nginx/nginx.conf"
@@ -46,22 +57,16 @@ Or install it yourself as:
 			:template => "sudoers/god.erb",
 			:user     => "fcoury",
 			:allow    => "/var/bin/all_your_base"
+			
+		# Download a file to server
+		
+		conn.get "https://webbynode_packages.s3.amazonaws.com/icecream-8.30.tar.gz", "/usr/local/src"
 		  
-		# Raw command execution
+		# Ubuntu specific package management
 
-		conn.exec_as :root, "REALLY_GEM_UPDATE_SYSTEM=y gem update --system"
+		conn.add_ppa "chris-lea/node.js"
+		conn.install "nodejs"
 	
-		# Script execution
-
-		conn.exec_script <<-EOS.strip_heredoc
-		
-			#!/bin/bash
-			apt-get install -y some-package
-		
-		EOS
-		
-		conn.exec_script_as :git, "scripts/add-public-ip"
-		
 		# Advanced commands
 		
 		conn.sed "/home/git/repo/.git/config", 
