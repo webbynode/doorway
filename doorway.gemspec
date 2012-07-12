@@ -12,6 +12,8 @@ Gem::Specification.new do |s|
   s.description   = s.summary
 
   s.add_development_dependency "rspec"          , "~> 2.11"
+  s.add_dependency "activesupport"              , "~> 3.0"
+  s.add_dependency "net-ssh"                    , "~> 2.5.2"
 
   s.files         = `git ls-files`.split($\)
   s.executables   = s.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
