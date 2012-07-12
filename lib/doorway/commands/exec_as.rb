@@ -1,4 +1,4 @@
-module ExecAs
+module Doorway::ExecAs
   def exec_as(user, command)
     exec %Q[sudo -i -u #{user} bash -c "#{escape_chars(command)}"]
   end

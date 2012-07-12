@@ -1,10 +1,9 @@
-require 'shared/command_context'
-require './lib/doorway/commands/exec_as'
+require 'spec_helper'
 
-describe ExecAs do
+describe Doorway::ExecAs do
   include_context "command"
 
-  before { include_commands_from ExecAs }
+  before { include_commands_from Doorway::ExecAs }
 
   it "executes the command as the user" do
     expected_command = %Q[sudo -i -u git bash -c "/etc/init.d/nginx stop"]

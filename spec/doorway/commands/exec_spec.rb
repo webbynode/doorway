@@ -1,10 +1,9 @@
-require 'shared/command_context'
-require './lib/doorway/commands/exec'
+require 'spec_helper'
 
-describe Exec do
+describe Doorway::Exec do
   include_context "command"
 
-  before { include_commands_from Exec }
+  before { include_commands_from Doorway::Exec }
 
   it "executes the command as the default user" do
     conn.should_receive(:exec!).with("command")
