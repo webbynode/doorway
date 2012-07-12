@@ -1,15 +1,10 @@
+require 'shared/command_context'
 require './lib/doorway/commands/exec_as'
 
 describe ExecAs do
-  let(:conn) { stub(:conn) }
+  include_context "command"
 
-  subject do
-    Class.new { include ExecAs }.new
-  end
-  
-  before do
-    subject.stub(:conn => conn)
-  end
+  before { include_commands_from ExecAs }
 
   it "executes the command as the user" do
     expected_command = %Q[sudo -i -u git bash -c "/etc/init.d/nginx stop"]
