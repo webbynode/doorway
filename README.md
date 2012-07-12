@@ -18,7 +18,8 @@ Or install it yourself as:
 
 ## Usage
 
-	doorway = Doorway.new(:root, "10.0.1.20", :ssh_key => "~/.keys/somekey.pem")
+	doorway = Doorway.connect(:root, "10.0.1.20", :ssh_key => "~/.keys/somekey.pem")
+	doorway.exec "ls -la"
 	
 	# -or-
 	
