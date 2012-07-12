@@ -1,6 +1,6 @@
 # Doorway
 
-Provides a sane set of utility methods to provision remote servers over SSH and SCP.
+Sane set of utility methods to provision remote servers over SSH and SCP.
 
 ## Installation
 
